@@ -68,11 +68,46 @@
             <button
                 type="submit"
                 class="primary-btn"
+                id="voteBtn"
             >
                 🔒 Submit Secure Vote
             </button>
 
         </form>
+        <!-- ENCRYPTION ANIMATION -->
+
+<div
+    class="encryption-panel"
+    id="encryptionPanel"
+>
+
+    <div class="terminal-header">
+
+        ● SECURE TRANSMISSION TERMINAL
+
+    </div>
+
+    <div class="terminal-body">
+
+        <p id="encryptLine1">
+            Initializing AES-256 Encryption...
+        </p>
+
+        <p id="encryptLine2">
+            Generating Secure RSA Keys...
+        </p>
+
+        <p id="encryptLine3">
+            Verifying SHA-256 Integrity...
+        </p>
+
+        <p id="encryptLine4">
+            Secure Vote Transmission Ready...
+        </p>
+
+    </div>
+
+</div>
 
         <div class="bottom-info">
             SHA-256 Integrity Verification Enabled
@@ -81,6 +116,53 @@
     </div>
 
 </div>
+<script>
 
+const voteForm =
+    document.querySelector(
+        ".vote-form"
+    );
+
+const voteBtn =
+    document.getElementById(
+        "voteBtn"
+    );
+
+const encryptionPanel =
+    document.getElementById(
+        "encryptionPanel"
+    );
+
+voteForm.addEventListener(
+    "submit",
+    function(e){
+
+        e.preventDefault();
+
+        voteBtn.innerHTML =
+            "Encrypting Vote...";
+
+        voteBtn.disabled = true;
+
+        encryptionPanel.style.display =
+            "block";
+
+        setTimeout(() => {
+
+            voteBtn.innerHTML =
+                "Transmitting Securely...";
+
+        }, 1200);
+
+        setTimeout(() => {
+
+            voteForm.submit();
+
+        }, 2600);
+
+    }
+);
+
+</script>
 </body>
 </html>
