@@ -1,5 +1,9 @@
 import sqlite3
 
+from werkzeug.security import (
+    generate_password_hash
+)
+
 conn = sqlite3.connect("database.db")
 
 cursor = conn.cursor()
@@ -7,6 +11,7 @@ cursor = conn.cursor()
 # =========================
 # USERS TABLE
 # =========================
+
 cursor.execute("""
 
 CREATE TABLE IF NOT EXISTS users (
@@ -27,6 +32,7 @@ CREATE TABLE IF NOT EXISTS users (
 # =========================
 # VOTES TABLE
 # =========================
+
 cursor.execute("""
 
 CREATE TABLE IF NOT EXISTS votes (
@@ -45,37 +51,67 @@ CREATE TABLE IF NOT EXISTS votes (
 """)
 
 # =========================
-# DEFAULT USERS
+# HASHED PASSWORDS
 # =========================
-cursor.execute("""
 
-INSERT OR IGNORE INTO users
-(username, password, role)
+admin_password = generate_password_hash(
+    "Admin@123"
+)
 
-VALUES
-('admin', 'admin123', 'admin')
+voter_password = generate_password_hash(
+    "Vote@123"
+)
 
-""")
-
-cursor.execute("""
-
-INSERT OR IGNORE INTO users
-(username, password, role)
-
-VALUES
-('voter1', 'vote123', 'voter')
-
-""")
+# =========================
+# ADMIN USER
+# =========================
 
 cursor.execute("""
 
 INSERT OR IGNORE INTO users
 (username, password, role)
 
-VALUES
-('voter2', 'vote123', 'voter')
+VALUES (?, ?, ?)
 
-""")
+""", (
+    'admin',
+    admin_password,
+    'admin'
+))
+
+# =========================
+# VOTER 1
+# =========================
+
+cursor.execute("""
+
+INSERT OR IGNORE INTO users
+(username, password, role)
+
+VALUES (?, ?, ?)
+
+""", (
+    'voterone',
+    voter_password,
+    'voter'
+))
+
+# =========================
+# VOTER 2
+# =========================
+
+cursor.execute("""
+
+INSERT OR IGNORE INTO users
+(username, password, role)
+
+VALUES (?, ?, ?)
+
+""", (
+    'votertwo',
+    voter_password,
+    'voter'
+))
 
 conn.commit()
 

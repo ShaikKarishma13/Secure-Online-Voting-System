@@ -401,6 +401,10 @@ def vote():
 # ADMIN PANEL
 # =========================
 
+# =========================
+# ADMIN PANEL
+# =========================
+
 @app.route('/admin')
 def admin():
 
@@ -420,6 +424,37 @@ def admin():
 
     cursor = conn.cursor()
 
+    # =====================
+    # TOTAL USERS
+    # =====================
+
+    cursor.execute("""
+
+    SELECT COUNT(*)
+    FROM users
+    WHERE role = 'voter'
+
+    """)
+
+    total_voters = cursor.fetchone()[0]
+
+    # =====================
+    # TOTAL VOTES
+    # =====================
+
+    cursor.execute("""
+
+    SELECT COUNT(*)
+    FROM votes
+
+    """)
+
+    total_votes = cursor.fetchone()[0]
+
+    # =====================
+    # GET ALL VOTES
+    # =====================
+
     cursor.execute(
         "SELECT * FROM votes"
     )
@@ -429,6 +464,121 @@ def admin():
     conn.close()
 
     decrypted_votes = []
+
+    # =====================
+    # DECRYPT VOTES
+    # =====================
+
+    for vote in votes:
+
+        encrypted_vote_json = (
+            vote[2]
+        )
+
+        encrypted_key_b64 = (
+            vote[3]
+        )
+
+        stored_hash = (
+            vote[4]
+        )
+
+        # VERIFY HASH
+        if verify_hash(
+            encrypted_vote_json,
+            stored_hash
+        ):
+
+            encrypted_key = (
+                base64.b64decode(
+                    encrypted_key_b64
+                )
+            )
+
+            aes_key = decrypt_aes_key(
+                encrypted_key,
+                admin_private_key
+            )
+
+            encrypted_vote = (
+                json.loads(
+                    encrypted_vote_json
+                )
+            )
+
+            decrypted_vote = decrypt_vote(
+                encrypted_vote,
+                aes_key
+            )
+
+            decrypted_votes.append(
+                decrypted_vote
+            )
+
+    # =====================
+    # COUNT RESULTS
+    # =====================
+
+    results = {}
+
+    for candidate in decrypted_votes:
+
+        results[candidate] = (
+            results.get(candidate, 0) + 1
+        )
+
+    # =====================
+    # SORT RANKINGS
+    # =====================
+
+    rankings = sorted(
+        results.items(),
+        key=lambda x: x[1],
+        reverse=True
+    )
+
+    # =====================
+    # CALCULATE PERCENTAGES
+    # =====================
+
+    percentages = {}
+
+    for candidate, votes_count in results.items():
+
+        if total_votes > 0:
+
+            percentage = (
+                votes_count / total_votes
+            ) * 100
+
+        else:
+
+            percentage = 0
+
+        percentages[candidate] = round(
+            percentage,
+            2
+        )
+
+    # =====================
+    # RENDER DASHBOARD
+    # =====================
+
+    return render_template(
+        'results.html',
+
+        results=results,
+
+        rankings=rankings,
+
+        percentages=percentages,
+
+        total_voters=total_voters,
+
+        total_votes=total_votes,
+
+        admin_name=session['username']
+    )
 
     # =====================
     # DECRYPT VOTES

@@ -10,59 +10,457 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Election Results</title>
+    <title>Admin Dashboard</title>
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}"
     >
 
+    <!-- CHART JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
-<!-- LOGOUT BUTTON -->
-<a href="/logout" class="logout-btn">
-    Logout
-</a>
+<div class="dashboard-wrapper">
 
-<div class="container">
+    <div class="dashboard-container">
 
-    <div class="glass-card">
+        <!-- HEADER -->
 
-        <h1>
-            📊 Election Results
-        </h1>
+        <div class="dashboard-header">
 
-        <p class="subtitle">
-            Secure decrypted voting results verified using SHA-256.
-        </p>
+            <div>
 
-        {% for candidate, votes in results.items() %}
+                <div class="admin-badge">
+                    🛡️ ADMIN CONTROL PANEL
+                </div>
 
-        <div class="result-box">
+                <h1 class="dashboard-title">
+                    Election Dashboard
+                </h1>
 
-            <h2>
-                {{ candidate }}
-            </h2>
+                <p class="dashboard-subtitle">
+                    Welcome,
+                    {{ admin_name }}
+                </p>
 
-            <p>
-                Total Votes : {{ votes }}
-            </p>
+            </div>
+
+            <a
+                href="/logout"
+                class="logout-btn"
+            >
+                Logout
+            </a>
 
         </div>
 
-        {% endfor %}
+        <!-- LIVE STATUS -->
 
-        <br>
+        <div class="live-status">
 
-        <a href="/" class="btn">
-            Back To Home
-        </a>
+            <span class="live-dot"></span>
+
+            Live Election Statistics
+
+        </div>
+
+        <!-- STATS CARDS -->
+
+        <div class="stats-grid">
+
+            <div class="stats-card animated-card">
+
+                <div class="stats-icon">
+                    👥
+                </div>
+
+                <h3>
+                    Total Voters
+                </h3>
+
+                <h2 class="stats-number">
+                    {{ total_voters }}
+                </h2>
+
+                <p class="stats-info">
+                    Registered voters in system
+                </p>
+
+            </div>
+
+            <div class="stats-card animated-card">
+
+                <div class="stats-icon">
+                    🗳️
+                </div>
+
+                <h3>
+                    Votes Cast
+                </h3>
+
+                <h2 class="stats-number">
+                    {{ total_votes }}
+                </h2>
+
+                <p class="stats-info">
+                    Successfully encrypted votes
+                </p>
+
+            </div>
+
+            <div class="stats-card animated-card">
+
+                <div class="stats-icon">
+                    📈
+                </div>
+
+                <h3>
+                    Voting Percentage
+                </h3>
+
+                <h2 class="stats-number">
+
+                    {% if total_voters > 0 %}
+
+                        {{
+                            (
+                                (total_votes / total_voters)
+                                * 100
+                            ) | round(1)
+                        }}%
+
+                    {% else %}
+
+                        0%
+
+                    {% endif %}
+
+                </h2>
+
+                <p class="stats-info">
+                    Overall participation rate
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- CANDIDATE RESULTS -->
+
+        <div class="results-section">
+
+            <div class="results-header">
+
+                <h2 class="section-title">
+                    📊 Candidate Rankings
+                </h2>
+
+                <div class="results-count">
+
+                    {{ rankings|length }}
+
+                    Candidates
+
+                </div>
+
+            </div>
+
+            {% if rankings %}
+
+                {% for candidate, votes in rankings %}
+
+                <div class="candidate-card">
+
+                    <div class="candidate-top">
+
+                        <div class="candidate-left">
+
+                            <div class="rank-badge">
+
+                                #{{ loop.index }}
+
+                            </div>
+
+                            <h3>
+                                {{ candidate }}
+                            </h3>
+
+                        </div>
+
+                        <span class="vote-count">
+
+                            {{ votes }} Votes
+
+                        </span>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="
+                                width:
+                                {{ percentages[candidate] }}%;
+                            "
+                        ></div>
+
+                    </div>
+
+                    <div class="percentage-row">
+
+                        <span>
+                            Vote Share
+                        </span>
+
+                        <span class="percentage-text">
+
+                            {{ percentages[candidate] }}%
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <h3>
+                        No Votes Yet
+                    </h3>
+
+                    <p>
+                        Votes will appear here after voters submit ballots.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+<!-- ANALYTICS SECTION -->
+
+<div class="analytics-section">
+
+    <div class="analytics-header">
+
+        <h2 class="section-title">
+            📈 Live Election Analytics
+        </h2>
+
+    </div>
+
+    <div class="charts-grid">
+
+        <!-- PIE CHART -->
+
+        <div class="chart-card">
+
+            <h3>
+                Vote Distribution
+            </h3>
+
+            <canvas id="pieChart"></canvas>
+
+        </div>
+
+        <!-- BAR GRAPH -->
+
+        <div class="chart-card">
+
+            <h3>
+                Candidate Performance
+            </h3>
+
+            <canvas id="barChart"></canvas>
+
+        </div>
 
     </div>
 
 </div>
+    </div>
 
+</div>
+<script>
+
+    // =========================
+    // DATA FROM FLASK
+    // =========================
+
+    const candidates = [
+
+        {% for candidate, votes in rankings %}
+
+            "{{ candidate }}",
+
+        {% endfor %}
+
+    ];
+
+    const votes = [
+
+        {% for candidate, votes in rankings %}
+
+            {{ votes }},
+
+        {% endfor %}
+
+    ];
+
+    // =========================
+    // PIE CHART
+    // =========================
+
+    const pieCtx =
+        document.getElementById(
+            'pieChart'
+        );
+
+    new Chart(pieCtx, {
+
+        type: 'pie',
+
+        data: {
+
+            labels: candidates,
+
+            datasets: [{
+
+                data: votes,
+
+                backgroundColor: [
+
+                    '#06b6d4',
+                    '#2563eb',
+                    '#7c3aed',
+                    '#14b8a6',
+                    '#f59e0b'
+
+                ],
+
+                borderWidth: 0
+            }]
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+
+                legend: {
+
+                    labels: {
+
+                        color: 'white',
+
+                        font: {
+
+                            size: 14
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+
+    // =========================
+    // BAR GRAPH
+    // =========================
+
+    const barCtx =
+        document.getElementById(
+            'barChart'
+        );
+
+    new Chart(barCtx, {
+
+        type: 'bar',
+
+        data: {
+
+            labels: candidates,
+
+            datasets: [{
+
+                label: 'Votes',
+
+                data: votes,
+
+                backgroundColor: [
+
+                    '#06b6d4',
+                    '#2563eb',
+                    '#7c3aed',
+                    '#14b8a6',
+                    '#f59e0b'
+
+                ],
+
+                borderRadius: 10
+            }]
+        },
+
+        options: {
+
+            responsive: true,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        color: 'white'
+                    },
+
+                    grid: {
+
+                        color:
+                        'rgba(255,255,255,0.08)'
+                    }
+                },
+
+                x: {
+
+                    ticks: {
+
+                        color: 'white'
+                    },
+
+                    grid: {
+
+                        display: false
+                    }
+                }
+            },
+
+            plugins: {
+
+                legend: {
+
+                    labels: {
+
+                        color: 'white'
+                    }
+                }
+            }
+        }
+    });
+
+</script>
 </body>
 </html>
