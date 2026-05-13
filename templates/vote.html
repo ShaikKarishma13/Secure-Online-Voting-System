@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cast Vote</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<!-- LOGOUT BUTTON -->
+<a href="/logout" class="logout-btn">
+    Logout
+</a>
+
+<div class="page-wrapper">
+
+    <div class="glass-card vote-card">
+
+        <div class="top-badge">
+            🔐 ENCRYPTED VOTING
+        </div>
+
+        <h1 class="main-title">
+            🗳️ Cast Your Vote
+        </h1>
+
+        <p class="subtitle">
+            Your vote will be encrypted using AES and secured with RSA encryption.
+        </p>
+
+        <form method="POST" class="vote-form">
+
+            <label class="input-label">
+                Select Candidate
+            </label>
+
+            <select name="candidate" required>
+
+                <option value="" disabled selected>
+                    Choose Candidate
+                </option>
+
+                <option value="Alice">
+                    Alice
+                </option>
+
+                <option value="Bob">
+                    Bob
+                </option>
+
+                <option value="Charlie">
+                    Charlie
+                </option>
+
+            </select>
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                🔒 Submit Secure Vote
+            </button>
+
+        </form>
+
+        <div class="bottom-info">
+            SHA-256 Integrity Verification Enabled
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,785 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+    font-family:
+    'Segoe UI',
+    Tahoma,
+    Geneva,
+    Verdana,
+    sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow-x:hidden;
+
+    background:
+    radial-gradient(circle at top left,
+    rgba(0,255,255,0.12),
+    transparent 25%),
+
+    radial-gradient(circle at bottom right,
+    rgba(139,92,246,0.15),
+    transparent 30%),
+
+    #020617;
+
+    color:white;
+}
+
+.container{
+
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:40px;
+}
+
+.glass-card{
+
+    width:100%;
+    max-width:750px;
+
+    padding:50px;
+
+    border-radius:28px;
+
+    background:
+    rgba(15,23,42,0.75);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+    0 0 40px rgba(0,255,255,0.08);
+
+    text-align:center;
+
+    transition:0.3s ease;
+}
+
+.glass-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 0 60px rgba(0,255,255,0.12);
+}
+
+h1{
+
+    font-size:52px;
+
+    line-height:1.2;
+
+    margin-bottom:25px;
+
+    color:#22d3ee;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+}
+
+.subtitle{
+
+    color:#cbd5e1;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    margin-bottom:40px;
+}
+
+.button-group{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+}
+
+.btn{
+
+    text-decoration:none;
+
+    padding:16px 38px;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #06b6d4,
+        #2563eb
+    );
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    transition:0.3s ease;
+
+    border:none;
+
+    cursor:pointer;
+}
+
+.btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 0 25px rgba(34,211,238,0.4);
+}
+
+.secondary-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #7c3aed,
+        #9333ea
+    );
+}
+
+form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:24px;
+
+    margin-top:30px;
+}
+
+input,
+select{
+
+    width:100%;
+
+    padding:18px;
+
+    border-radius:14px;
+
+    border: 1px solid #00d4ff;
+    background: #111827;
+    color:white;
+
+    font-size:18px;
+
+    outline:none;
+    appearance: none;
+
+    transition:0.3s ease;
+}
+
+input::placeholder{
+    color:#94a3b8;
+}
+
+input:focus,
+select:focus{
+
+    border:
+    1px solid #22d3ee;
+
+    box-shadow:
+    0 0 15px rgba(34,211,238,0.25);
+}
+
+button{
+
+    width:100%;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #06b6d4,
+        #2563eb
+    );
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 25px rgba(34,211,238,0.45);
+}
+
+.result-box{
+
+    margin-top:24px;
+
+    padding:24px;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    text-align:left;
+
+    overflow-wrap:break-word;
+}
+
+.result-box h2,
+.result-box h3{
+
+    color:#22d3ee;
+
+    margin-bottom:12px;
+}
+
+.result-box p{
+
+    color:#e2e8f0;
+
+    line-height:1.7;
+}
+
+@media(max-width:768px){
+
+    h1{
+        font-size:38px;
+    }
+
+    .glass-card{
+        padding:35px;
+    }
+
+    .btn{
+        width:100%;
+    }
+}
+/* =========================
+   AUTH PAGE
+========================= */
+
+.auth-wrapper {
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        radial-gradient(circle at top left,
+        rgba(0,255,255,0.12),
+        transparent 30%),
+
+        radial-gradient(circle at bottom right,
+        rgba(138,43,226,0.22),
+        transparent 30%),
+
+        #020617;
+}
+
+.auth-card {
+
+    width: 600px;
+
+    background:
+        rgba(8,15,40,0.92);
+
+    border:
+        1px solid rgba(0,255,255,0.08);
+
+    border-radius: 24px;
+
+    padding: 50px;
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 0 40px rgba(0,255,255,0.08);
+
+    animation:
+        fadeIn 0.8s ease;
+}
+
+.security-badge {
+
+    display: inline-block;
+
+    padding:
+        8px 18px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(0,255,255,0.08);
+
+    color:
+        #22d3ee;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 20px;
+}
+
+.auth-title {
+
+    font-size: 46px;
+
+    line-height: 1.1;
+
+    color:
+        #38bdf8;
+
+    margin-bottom: 12px;
+}
+
+.auth-subtitle {
+
+    color:
+        #94a3b8;
+
+    margin-bottom: 35px;
+
+    font-size: 16px;
+}
+
+.input-group {
+
+    margin-bottom: 24px;
+}
+
+.input-group label {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    color:
+        #cbd5e1;
+
+    font-size: 14px;
+}
+
+.input-group input {
+
+    width: 100%;
+
+    padding:
+        18px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    background:
+        rgba(15,23,42,0.9);
+
+    color:
+        white;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+
+    border-color:
+        #22d3ee;
+
+    box-shadow:
+        0 0 12px rgba(34,211,238,0.25);
+}
+
+.login-btn {
+
+    width: 100%;
+
+    padding:
+        18px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #06b6d4,
+            #2563eb
+        );
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 20px rgba(0,255,255,0.2);
+}
+
+small {
+
+    color:
+        #f87171;
+
+    font-size: 13px;
+
+    display: block;
+
+    margin-top: 8px;
+}
+
+.error-box {
+
+    background:
+        rgba(255,0,0,0.08);
+
+    border:
+        1px solid rgba(255,0,0,0.15);
+
+    color:
+        #f87171;
+
+    padding:
+        14px;
+
+    border-radius: 12px;
+
+    margin-bottom: 25px;
+}
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.validation-error {
+    color: #ff4d6d;
+    font-size: 13px;
+    margin-top: 6px;
+    display: block;
+}
+
+.error-box {
+    background: rgba(255, 77, 109, 0.12);
+    border: 1px solid #ff4d6d;
+    color: #ff4d6d;
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin-link {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.admin-link a {
+    color: #00d4ff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.admin-link a:hover {
+    color: #7c3aed;
+}
+
+select {
+    width: 100%;
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid #00d4ff;
+    background: #111827;
+    color: white;
+    font-size: 18px;
+    outline: none;
+}
+
+select option {
+    background: #111827;
+    color: white;
+}
+/* =========================
+   LOGOUT BUTTON
+========================= */
+
+.logout-btn{
+
+    position: fixed;
+
+    top: 25px;
+    right: 25px;
+
+    padding: 12px 22px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #b91c1c
+        );
+
+    box-shadow:
+        0 0 18px rgba(255,0,0,0.25);
+
+    transition: 0.3s ease;
+
+    z-index: 999;
+}
+
+.logout-btn:hover{
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 28px rgba(255,0,0,0.45);
+}
+
+
+/* =========================
+   PAGE LAYOUT
+========================= */
+
+.page-wrapper{
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+}
+
+
+/* =========================
+   VOTE PAGE
+========================= */
+
+.vote-card{
+
+    max-width: 700px;
+    width: 100%;
+}
+
+.vote-form{
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+
+    margin-top: 30px;
+}
+
+.input-label{
+
+    text-align: left;
+
+    color: #cbd5e1;
+
+    font-size: 15px;
+
+    margin-bottom: -10px;
+}
+
+select{
+
+    width: 100%;
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid rgba(0,212,255,0.35);
+
+    background:
+        rgba(15,23,42,0.95);
+
+    color: white;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.3s ease;
+
+    appearance: none;
+}
+
+select:focus{
+
+    border:
+        1px solid #22d3ee;
+
+    box-shadow:
+        0 0 15px rgba(34,211,238,0.25);
+}
+
+select option{
+
+    background: #111827;
+
+    color: white;
+}
+
+.primary-btn{
+
+    width: 100%;
+
+    padding: 18px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #06b6d4,
+            #2563eb
+        );
+
+    color: white;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.primary-btn:hover{
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 25px rgba(34,211,238,0.35);
+}
+
+
+/* =========================
+   BADGES & TITLES
+========================= */
+
+.top-badge{
+
+    display: inline-block;
+
+    padding:
+        8px 18px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(0,255,255,0.08);
+
+    color:
+        #22d3ee;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 22px;
+}
+
+.main-title{
+
+    font-size: 48px;
+
+    color: #38bdf8;
+
+    margin-bottom: 16px;
+
+    line-height: 1.1;
+}
+
+.bottom-info{
+
+    margin-top: 28px;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+
+    letter-spacing: 0.5px;
+}

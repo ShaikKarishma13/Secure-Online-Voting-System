@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Election Results</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<!-- LOGOUT BUTTON -->
+<a href="/logout" class="logout-btn">
+    Logout
+</a>
+
+<div class="container">
+
+    <div class="glass-card">
+
+        <h1>
+            📊 Election Results
+        </h1>
+
+        <p class="subtitle">
+            Secure decrypted voting results verified using SHA-256.
+        </p>
+
+        {% for candidate, votes in results.items() %}
+
+        <div class="result-box">
+
+            <h2>
+                {{ candidate }}
+            </h2>
+
+            <p>
+                Total Votes : {{ votes }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+        <br>
+
+        <a href="/" class="btn">
+            Back To Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

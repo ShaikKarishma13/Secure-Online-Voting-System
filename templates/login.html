@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Secure Authentication</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="auth-wrapper">
+
+    <div class="auth-card">
+
+        <div class="security-badge">
+            🔐 CYBER SECURE ACCESS
+        </div>
+
+        <h1 class="auth-title">
+            Secure Voting Login
+        </h1>
+
+        <p class="auth-subtitle">
+            Protected using RSA, AES & SHA-256
+        </p>
+
+        {% if error %}
+            <div class="error-box">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form
+            action="/login"
+            method="POST"
+            id="loginForm"
+        >
+
+            <!-- USERNAME -->
+
+            <div class="input-group">
+
+                <label>
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter Username"
+                    required
+                >
+
+                <small
+                    id="usernameError"
+                    class="validation-error"
+                ></small>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="input-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter Password"
+                    required
+                >
+
+                <small
+                    id="passwordError"
+                    class="validation-error"
+                ></small>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Secure Login
+            </button>
+
+        </form>
+
+
+        <!-- ADMIN PANEL BUTTON -->
+
+        <div class="admin-link">
+
+            <a href="/admin">
+
+                Open Admin Panel
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- JAVASCRIPT VALIDATION -->
+
+<script>
+
+const form =
+    document.getElementById("loginForm");
+
+form.addEventListener("submit", function(e) {
+
+    let valid = true;
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const usernameError =
+        document.getElementById("usernameError");
+
+    const passwordError =
+        document.getElementById("passwordError");
+
+    usernameError.innerText = "";
+    passwordError.innerText = "";
+
+
+
+    // USERNAME VALIDATION
+    // ONLY LETTERS ALLOWED
+
+    const usernameRegex =
+        /^[A-Za-z]{3,}$/;
+
+    if (!usernameRegex.test(username)) {
+
+        usernameError.innerText =
+            "Username must contain only letters and minimum 3 characters.";
+
+        valid = false;
+    }
+
+
+
+    // PASSWORD VALIDATION
+    // 1 UPPERCASE
+    // 1 LOWERCASE
+    // 1 NUMBER
+    // 1 SPECIAL CHARACTER
+    // MIN 8 CHARACTERS
+
+    const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+
+        passwordError.innerText =
+            "Password must contain uppercase, lowercase, number & special character.";
+
+        valid = false;
+    }
+
+
+
+    // PREVENT FORM SUBMISSION
+
+    if (!valid) {
+
+        e.preventDefault();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Vote Submitted</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<!-- LOGOUT BUTTON -->
+<a href="/logout" class="logout-btn">
+    Logout
+</a>
+
+<div class="container">
+
+    <div class="glass-card">
+
+        <h1>
+            ✅ Vote Submitted
+        </h1>
+
+        <p class="subtitle">
+            Your vote has been encrypted and securely stored.
+        </p>
+
+        {% if message %}
+
+        <div class="result-box">
+
+            <h3>
+                ⚠️ Notice
+            </h3>
+
+            <p>
+                {{ message }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+        {% if encrypted_vote %}
+
+        <div class="result-box">
+
+            <h3>
+                🔒 Encrypted Vote
+            </h3>
+
+            <p>
+                {{ encrypted_vote }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+        {% if vote_hash %}
+
+        <div class="result-box">
+
+            <h3>
+                🧠 SHA-256 Hash
+            </h3>
+
+            <p>
+                {{ vote_hash }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+        <br>
+
+        <a href="/" class="btn">
+            Back To Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
