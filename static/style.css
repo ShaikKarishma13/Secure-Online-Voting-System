@@ -1577,3 +1577,28 @@ body::before{
         opacity: 1;
     }
 }
+/* =========================
+   RECEIPT BUTTONS
+========================= */
+
+.receipt-buttons{
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-top: 25px;
+
+    flex-wrap: wrap;
+}
+
+.receipt-buttons .btn{
+
+    min-width: 240px;
+
+    text-align: center;
+}

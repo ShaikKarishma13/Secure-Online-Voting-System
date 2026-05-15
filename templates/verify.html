@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Vote Verification</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<!-- LOGOUT BUTTON -->
+
+<a href="/logout" class="logout-btn">
+    Logout
+</a>
+
+<div class="container">
+
+    <div class="glass-card">
+
+        <div class="top-badge">
+            🛡️ SHA-256 VERIFICATION SYSTEM
+        </div>
+
+        <h1 class="main-title">
+            Verify Voting Receipt
+        </h1>
+
+        <p class="subtitle">
+            Verify whether encrypted vote data
+            has been tampered with using
+            SHA-256 integrity validation.
+        </p>
+
+        <form
+            method="POST"
+            class="vote-form"
+        >
+
+            <!-- ENCRYPTED VOTE -->
+
+            <label class="input-label">
+                Encrypted Vote
+            </label>
+
+            <textarea
+                name="encrypted_vote"
+                required
+                placeholder="Paste encrypted vote here..."
+                class="verify-textarea"
+            ></textarea>
+
+            <!-- HASH -->
+
+            <label class="input-label">
+                SHA-256 Hash
+            </label>
+
+            <textarea
+                name="vote_hash"
+                required
+                placeholder="Paste SHA-256 hash here..."
+                class="verify-textarea"
+            ></textarea>
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                🔍 Verify Integrity
+            </button>
+
+        </form>
+
+        <!-- RESULT -->
+
+        {% if verification_result %}
+
+        <div class="verification-box">
+
+            {% if verification_result == "VERIFIED" %}
+
+                <h2 class="verified-text">
+                    ✅ INTEGRITY VERIFIED
+                </h2>
+
+                <p>
+                    Vote data is authentic and untampered.
+                </p>
+
+            {% else %}
+
+                <h2 class="tampered-text">
+                    ❌ TAMPERING DETECTED
+                </h2>
+
+                <p>
+                    Vote data integrity has been compromised.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

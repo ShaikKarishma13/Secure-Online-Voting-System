@@ -22,6 +22,7 @@
 <body>
 
 <!-- LOGOUT BUTTON -->
+
 <a href="/logout" class="logout-btn">
     Logout
 </a>
@@ -56,6 +57,8 @@
 
         {% if encrypted_vote %}
 
+        <!-- ENCRYPTED VOTE -->
+
         <div class="result-box">
 
             <h3>
@@ -72,6 +75,8 @@
 
         {% if vote_hash %}
 
+        <!-- HASH -->
+
         <div class="result-box">
 
             <h3>
@@ -83,41 +88,75 @@
             </p>
 
         </div>
+
+        <!-- RECEIPT SECTION -->
+
+        <div class="result-box">
+
+            <h3>
+                📄 Secure Voting Receipt
+            </h3>
+
+            <p>
+                Download your encrypted voting receipt
+                for future verification.
+            </p>
+
+            <div class="receipt-buttons">
+
+                <a
+                    href="/download_receipt"
+                    class="btn"
+                >
+                    ⬇ Download Receipt
+                </a>
+
+                <a
+                    href="/verify"
+                    class="btn secondary-btn"
+                >
+                    🔍 Verify Receipt
+                </a>
+
+            </div>
+
+        </div>
+
         <!-- SECURITY MONITOR -->
 
-<div class="security-monitor">
+        <div class="security-monitor">
 
-    <div class="monitor-header">
+            <div class="monitor-header">
 
-        🛡️ LIVE SECURITY MONITOR
+                🛡️ LIVE SECURITY MONITOR
 
-    </div>
+            </div>
 
-    <div class="monitor-body">
+            <div class="monitor-body">
 
-        <p class="secure-line">
-            ✔ AES-256 Encryption Successful
-        </p>
+                <p class="secure-line">
+                    ✔ AES-256 Encryption Successful
+                </p>
 
-        <p class="secure-line">
-            ✔ RSA Key Exchange Verified
-        </p>
+                <p class="secure-line">
+                    ✔ RSA Key Exchange Verified
+                </p>
 
-        <p class="secure-line">
-            ✔ SHA-256 Integrity Confirmed
-        </p>
+                <p class="secure-line">
+                    ✔ SHA-256 Integrity Confirmed
+                </p>
 
-        <p class="alert-line">
-            ⚠ Intrusion Attempt Blocked
-        </p>
+                <p class="alert-line">
+                    ⚠ Intrusion Attempt Blocked
+                </p>
 
-        <p class="secure-line">
-            ✔ Vote Stored Securely
-        </p>
+                <p class="secure-line">
+                    ✔ Vote Stored Securely
+                </p>
 
-    </div>
+            </div>
 
-</div>
+        </div>
 
         {% endif %}
 
